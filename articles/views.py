@@ -7,6 +7,7 @@ from .models import Article, Comment
 from .serializers import ArticleListSerializer, ArticleDetailSerializer, CommentSerializer
 from django.core.cache import cache
 
+
 class ArticleListCreate(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
@@ -24,7 +25,9 @@ class ArticleListCreate(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class ArticleDetail(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_object(self, article_pk):
         return get_object_or_404(Article, pk=article_pk)
@@ -51,6 +54,34 @@ class ArticleDetail(APIView):
         
         serializer = ArticleDetailSerializer(article)  # 상세 Serializer 사용
         return Response(serializer.data)
+
+    def delete(self, request, article_pk):
+        """게시글 삭제"""
+        article = self.get_object(article_pk)
+        
+        # 작성자 본인인지 확인
+        if request.user != article.author:
+            return Response({'error': '게시글 작성자만 삭제할 수 있습니다.'}, 
+                          status=status.HTTP_403_FORBIDDEN)
+            
+        article.delete()
+        return Response({'message': '게시글이 성공적으로 삭제되었습니다.'}, 
+                      status=status.HTTP_204_NO_CONTENT)
+
+    def put(self, request, article_pk):
+        """게시글 수정"""
+        article = self.get_object(article_pk)
+        
+        # 작성자 본인인지 확인
+        if request.user != article.author:
+            return Response({'error': '게시글 작성자만 수정할 수 있습니다.'}, 
+                          status=status.HTTP_403_FORBIDDEN)
+            
+        serializer = ArticleDetailSerializer(article, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CommentListCreate(APIView):
 
