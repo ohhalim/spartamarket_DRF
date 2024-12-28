@@ -8,7 +8,7 @@ class Article(models.Model):
     created_at = models.DateTimeField('작성일', auto_now_add=True)
     updated_at = models.DateTimeField('수정일', auto_now=True)
     view_count = models.PositiveIntegerField('조회수', default=0)  # 조회수 필드 추가
-
+    
     def __str__(self):
         return self.title
 
@@ -22,3 +22,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.author} - {self.content}'
+

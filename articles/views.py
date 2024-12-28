@@ -2,20 +2,57 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework import viewsets
+from rest_framework.filters import SearchFilter, OrderingFilter
+
+
 from django.shortcuts import get_object_or_404
+from django.core.cache import cache
+from django.db.models import Q
+
 from .models import Article, Comment
 from .serializers import ArticleListSerializer, ArticleDetailSerializer, CommentSerializer
-from django.core.cache import cache
+
 
 
 class ArticleListCreate(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
+    pagination_class = PageNumberPagination()
 
     def get(self, request):
         """게시글 목록 조회"""
+        # 쿼리셋 생성
+        queryset = Article.objects.all()
+        
+        # 검색 필터링
+        search = request.query_params.get('search', '')
+        if search:
+            queryset = queryset.filter(
+                Q(title__icontains=search) |
+                Q(content__icontains=search)
+            )
+        
+        # 정렬
+        ordering = request.query_params.get('ordering', '')
+        if ordering in ['created_at', 'view_count', '-created_at', '-view_count']:
+            queryset = queryset.order_by(ordering)
+            
+        # 페이지네이션
+        paginator = self.pagination_class
+        paginated_queryset = paginator.paginate_queryset(queryset, request)
+        
+        # 직렬화
+        serializer = ArticleListSerializer(paginated_queryset, many=True)
+        
+        return paginator.get_paginated_response(serializer.data)
+     
         articles = Article.objects.all()
         serializer = ArticleListSerializer(articles, many=True)  # 목록용 Serializer 사용
         return Response(serializer.data)
+
+
 
     def post(self, request):
         """게시글 생성"""
@@ -24,6 +61,18 @@ class ArticleListCreate(APIView):
             serializer.save(author=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    pagination_class = PageNumberPagination
+    queryset = Article.objects.all()
+    serializer_class = ArticleListSerializer
+
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['title', 'content']
+    ordering_fields = ['created_at', 'view_count']
+
+
 
 
 class ArticleDetail(APIView):
@@ -57,7 +106,7 @@ class ArticleDetail(APIView):
 
     def delete(self, request, article_pk):
         """게시글 삭제"""
-        article = self.get_object(article_pk)
+        article = self.get_object(article_pk)    
         
         # 작성자 본인인지 확인
         if request.user != article.author:
@@ -138,3 +187,5 @@ class CommentLike(APIView):
             'message': message,
             'comment': serializer.data
         }, status=status.HTTP_200_OK)
+
+

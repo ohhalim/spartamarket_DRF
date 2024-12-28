@@ -4,7 +4,7 @@ from .models import Article, Comment
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
-    """게시글 목록 죄회 Serializer"""
+    """게시글 목록 조회 Serializer"""
 
     class Meta:
         model = Article
