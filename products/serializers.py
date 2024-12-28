@@ -1,23 +1,23 @@
 from rest_framework import serializers
-from .models import Article, Comment
+from .models import Product, Comment
 
 
 
-class ArticleListSerializer(serializers.ModelSerializer):
-    """게시글 목록 조회 Serializer"""
+class ProductListSerializer(serializers.ModelSerializer):
+    """상품 목록 조회 Serializer"""
 
     class Meta:
-        model = Article
+        model = Product
         fields = ('id', 'author', 'title', 'created_at', 'view_count')  # 조회수 필드 추가
         read_only_fields = ('author', )
         
         
-class ArticleDetailSerializer(serializers.ModelSerializer):
-    """게시글 상세 조회 및 생성 Serializer"""
+class ProductDetailSerializer(serializers.ModelSerializer):
+    """상품 상세 조회 및 생성 Serializer"""
     author = serializers.ReadOnlyField(source='author.email') # author 필드에 작성자의 이메일만 출력
     
     class Meta:
-        model = Article
+        model = Product
         fields = ('id', 'author', 'title', 'content', 'created_at', 'updated_at', 'view_count')  # 조회수 필드 추가
 
 
@@ -29,9 +29,9 @@ class CommentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Comment
-        fields = ('id', 'article', 'author', 'content', 'created_at', 
+        fields = ('id', 'product', 'author', 'content', 'created_at', 
                  'updated_at', 'like_users', 'like_count', 'is_liked')
-        read_only_fields = ('article','like_users')
+        read_only_fields = ('product','like_users')
         
     def get_is_liked(self, obj):
         request = self.context.get('request')
