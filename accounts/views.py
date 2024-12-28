@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
 
 User = get_user_model()
 
@@ -106,3 +107,11 @@ def follow(request, user_pk):
         'is_followed': is_followed,
         'message': message,
     }, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    serializer = UserProfileSerializer(user, context={'request': request})
+    return Response(serializer.data, status=status.HTTP_200_OK)
