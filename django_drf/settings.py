@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     
     # my apps
     'accounts',
-    'articles',
+    'products',
     #더미 데이터 생성
     'django_seed',
 ]
@@ -149,6 +149,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10
+
 }
 
 # JWT 설정
