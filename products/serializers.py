@@ -18,7 +18,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Product
-        fields = ('id', 'author', 'title', 'content', 'created_at', 'updated_at', 'view_count')  # 조회수 필드 추가
+        fields = ('id', 'author', 'title', 'content', 'created_ at', 'updated_at', 'view_count', 'product_image')  # 조회수 필드 추가
 
 
 class CommentSerializer(serializers.ModelSerializer):
