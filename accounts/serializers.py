@@ -20,8 +20,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'profile_image', 'followings', 
-                 'followers', 'follower_count', 'following_count']
+        fields = ['email', 'username', 'name', 'birth_date', 'gender', 'bio',
+                 'profile_image', 'followings', 'followers', 
+                 'follower_count', 'following_count']
 
     def get_profile_image(self, obj):
         request = self.context.get('request')
@@ -37,7 +38,14 @@ class SignupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'password', 'password2', 'profile_image')
+        fields = ('email', 'username', 'name', 'birth_date', 'password', 
+                 'password2', 'gender', 'bio', 'profile_image')
+        extra_kwargs = {
+            'name': {'required': True},
+            'birth_date': {'required': True},
+            'gender': {'required': False},
+            'bio': {'required': False},
+        }
 
     def validate(self, data):
         if data['password'] != data['password2']:
@@ -52,4 +60,4 @@ class SignupSerializer(serializers.ModelSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'profile_image')
+        fields = ('username', 'name', 'birth_date', 'gender', 'bio', 'profile_image')

@@ -26,14 +26,14 @@ def Signup(request):
 
 
 @api_view(['POST'])
-@authentication_classes([])      # 전역 인증 설정 무시
-@permission_classes([])  # 전역 IsAuthenticated 설정 무시
+@authentication_classes([])      
+@permission_classes([])  
 def login(request):
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
         # 사용자 인증
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             # JWT 토큰 생성
             refresh = RefreshToken.for_user(user)
