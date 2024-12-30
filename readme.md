@@ -96,7 +96,7 @@ https://www.notion.so/167e4fdf7114800486c9c355f89cd655?v=167e4fdf711481cfb6c6000
 
 <br>
 > #### 상품 목록 조회 
-![images](images/5.)
+![images](images/5.gif)
 
 <br>> 
 #### 상품 수정  
