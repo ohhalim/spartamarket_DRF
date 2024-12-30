@@ -93,19 +93,18 @@ https://www.notion.so/167e4fdf7114800486c9c355f89cd655?v=167e4fdf711481cfb6c6000
 
 > #### 상품 등록
 ![images](images/4.gif)
-
 <br>
-> #### 상품 목록 조회 
+
+> #### 상품 목록 조회
 ![images](images/5.gif)
+<br>
 
-<br>> 
-#### 상품 수정  
+> #### 상품 수정
 ![images](images/6.gif)
+<br>
 
-<br>> 
 #### 상품 삭제
 ![images](images/7.gif)
-
 <br>
 
 ##  기술스택
