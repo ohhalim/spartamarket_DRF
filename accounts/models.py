@@ -1,15 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-<<<<<<< HEAD
-
-
-class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError('이메일은 필수 항목입니다.')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-=======
 from django.utils import timezone
 
 
@@ -21,31 +11,20 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('사용자명은 필수 항목입니다.')
         email = self.normalize_email(email)
         user = self.model(username=username, email=email, **extra_fields)
->>>>>>> accounts
         user.set_password(password)
         user.save()
         return user
     
-<<<<<<< HEAD
-    def create_superuser(self, email, username, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        return self.create_user(email, password, **extra_fields)
-=======
     def create_superuser(self, username, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(username=username, email=email, password=password, **extra_fields)
->>>>>>> accounts
     
 
 
 # Create your models here.
 class User(AbstractUser):
     email = models.EmailField('이메일', unique=True)
-<<<<<<< HEAD
-    username = models.CharField('닉네임', max_length=100)
-=======
     username = models.CharField('닉네임', max_length=100, unique=True)
     name = models.CharField('이름', max_length=100, default='')
     birth_date = models.DateField('생년월일', default=timezone.now)
@@ -55,7 +34,6 @@ class User(AbstractUser):
         ('O', '기타')
     ], null=True, blank=True)
     bio = models.TextField('자기소개', null=True, blank=True)
->>>>>>> accounts
     profile_image = models.ImageField('프로필 이미지', upload_to='profile_images/', null=True, blank=True)
 
     followings = models.ManyToManyField(
@@ -66,13 +44,8 @@ class User(AbstractUser):
         blank= True
     )
 
-<<<<<<< HEAD
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-=======
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
->>>>>>> accounts
 
     objects = CustomUserManager()
 

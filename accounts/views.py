@@ -8,10 +8,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-<<<<<<< HEAD
-=======
 from rest_framework.permissions import IsAuthenticated
->>>>>>> accounts
 
 User = get_user_model()
 
@@ -29,16 +26,6 @@ def Signup(request):
 
 
 @api_view(['POST'])
-<<<<<<< HEAD
-@authentication_classes([])      # 전역 인증 설정 무시
-@permission_classes([])  # 전역 IsAuthenticated 설정 무시
-def login(request):
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        # 사용자 인증
-        user = authenticate(request, email=email, password=password)
-=======
 @authentication_classes([])      
 @permission_classes([])  
 def login(request):
@@ -47,7 +34,6 @@ def login(request):
 
         # 사용자 인증
         user = authenticate(request, username=username, password=password)
->>>>>>> accounts
         if user is not None:
             # JWT 토큰 생성
             refresh = RefreshToken.for_user(user)
@@ -120,9 +106,6 @@ def follow(request, user_pk):
     return Response({
         'is_followed': is_followed,
         'message': message,
-<<<<<<< HEAD
-    }, status=status.HTTP_200_OK)
-=======
     }, status=status.HTTP_200_OK)
 
 
@@ -132,4 +115,3 @@ def user_profile(request, username):
     user = get_object_or_404(User, username=username)
     serializer = UserProfileSerializer(user, context={'request': request})
     return Response(serializer.data, status=status.HTTP_200_OK)
->>>>>>> accounts

@@ -1,4 +1,4 @@
-#  아직 미완성입니다!!! ..프로젝트 스파르타 마켓 DRF 
+#  프로젝트 스파르타 마켓 DRF 
 
 ## 📖 목차 
 1. [프로젝트 소개](#프로젝트-소개) 
@@ -12,7 +12,7 @@
 
 ## 프로젝트 소개
 
-스파르타 마켓은  Django Rest Framework를 활용한 게시판 API 시스템입니다. 
+스파르타 마켓은  Django Rest Framework를 활용한 API 시스템입니다. 
 
 <br>
 
@@ -59,7 +59,7 @@
 
 7. **접속하기**
 
-    포스트맨에서 [http://127.0.0.1:8000/](http://127.0.0.1:8000/products/)에 접속합니다.
+    포스트맨에서 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)에 접속합니다.
 <br>
 
 
@@ -74,26 +74,37 @@ https://www.notion.so/167e4fdf7114800486c9c355f89cd655?v=167e4fdf711481cfb6c6000
 - 사용자 가입 및 로그인
 - 프로필 편집 및 팔로우 기능
 - 상품 등록, 수정, 삭제
-- 상품 좋아요(찜) 기능
+- 상품 서치
 
 <br>
 
 ##  시연
-> #### 사용자 가입 및 로그인
+> #### 사용자 가입 
 ![images](images/1.gif)
 <br>
 
-> #### 프로필 편집
+> #### 사용자 로그인
 ![images](images/2.gif)
 <br>
 
-> #### 상품 등록
+> #### 프로필 조회
 ![images](images/3.gif)
 <br>
 
-> #### 상품 좋아요(찜) 
+> #### 상품 등록
 ![images](images/4.gif)
 
+<br>
+> #### 상품 목록 조회 
+![images](images/5.)
+
+<br>> 
+#### 상품 수정  
+![images](images/6.gif)
+
+<br>> 
+#### 상품 삭제
+![images](images/7.gif)
 
 <br>
 
@@ -106,7 +117,7 @@ https://www.notion.so/167e4fdf7114800486c9c355f89cd655?v=167e4fdf711481cfb6c6000
 `Visual Studio`
 
 ### ✔️ Framework
-`django` `Django Rest Framework` `bootstrap`
+`django` `Django Rest Framework` 
 
 ### ✔️ ERD
 ![images](images/1.png)
@@ -115,11 +126,11 @@ https://www.notion.so/167e4fdf7114800486c9c355f89cd655?v=167e4fdf711481cfb6c6000
 
 ## Trouble Shooting
 
-◻ 프로필에 내 상품, 내 찜이 뜨지 않음 > 해결방법: url, views, templates 순으로 확인하고 문제점을 찾아 해결함
+◻ 장고에서 만들었던 프로젝트를 발전 시켜서 만들려했지만 실패함 > 특강자료를 참고해서 만들었음
 
 <br>
 
 ## 확장성
-◻ drf 활용으로 배포 할 수 있다
+◻ 클리우드 서버를 연결해 배포 할 수 있다
 
 
