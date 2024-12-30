@@ -110,7 +110,7 @@ https://www.notion.so/167e4fdf7114800486c9c355f89cd655?v=167e4fdf711481cfb6c6000
 ##  기술스택
 
 ### ✔️ Language
- `python` `css` `html` 
+ `python` 
 
 ### ✔️ IDE
 `Visual Studio`
